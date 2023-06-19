@@ -1,5 +1,4 @@
 import pygame
-
 from pygame.sprite import Sprite
 from game.utils.constants import SPACESHIP
 
@@ -15,9 +14,6 @@ class Spaceship(Sprite):
         self.rect.y = 500
         self.speed_x = 5
         self.speed_y = 5
-        
-    def draw(self, screen):
-        screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def update(self, events):
 
@@ -42,4 +38,6 @@ class Spaceship(Sprite):
       elif events[pygame.K_DOWN]:
          self.rect.y += self.speed_y
 
-      self.rect.clamp_ip(self.screen.get_rect())
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+        self.rect.clamp_ip(self.screen.get_rect())
