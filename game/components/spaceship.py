@@ -15,7 +15,10 @@ class Spaceship(Sprite):
         self.rect.y = 500
         self.speed_x = 5
         self.speed_y = 5
+<<<<<<< HEAD
         self.bullets = []
+=======
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
 
     def update(self, events):
         if events[pygame.K_LEFT] and events[pygame.K_UP]:
@@ -47,10 +50,13 @@ class Spaceship(Sprite):
         bullet.rect.y = self.rect.y
         self.bullets.append(bullet)
 
+<<<<<<< HEAD
     def update_bullets(self):
         for bullet in self.bullets:
             bullet.update()
 
+=======
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.rect.clamp_ip(self.screen.get_rect())

@@ -3,7 +3,11 @@ import random
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemy import Enemy
+<<<<<<< HEAD
 from game.components.bullet import Bullet
+=======
+
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
 
 class Game:
     def __init__(self):
@@ -18,7 +22,10 @@ class Game:
         self.y_pos_bg = 0
         self.spaceship = Spaceship()
         self.enemies = []
+<<<<<<< HEAD
         self.bullets = []
+=======
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
 
     def run(self):
         self.playing = True
@@ -30,7 +37,7 @@ class Game:
             print("Something occurred to quit the game!")
         pygame.display.quit()
         pygame.quit()
-
+    
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,9 +46,11 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     self.spaceship.shoot()
 
+
     def update(self):
         events = pygame.key.get_pressed()
         self.spaceship.update(events)
+<<<<<<< HEAD
         self.spaceship.update_bullets()
 
         for enemy in self.enemies:
@@ -57,6 +66,12 @@ class Game:
                     self.spaceship.bullets.remove(bullet)
                     break
 
+=======
+        
+        for enemy in self.enemies:
+            enemy.update()
+
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
         if len(self.enemies) == 0:
             self.regenerate_enemies()
 
@@ -68,11 +83,16 @@ class Game:
         for enemy in self.enemies:
             enemy.draw(self.screen)
 
+<<<<<<< HEAD
         for bullet in self.spaceship.bullets:
             bullet.draw(self.screen)
 
         pygame.display.update()
         pygame.display.flip()
+=======
+        pygame.display.update() # esto hace que el dibujo se actualice en el display de pygame
+        pygame.display.flip()  # hace el cambio
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -90,3 +110,7 @@ class Game:
             enemy.rect.x = random.randint(0, SCREEN_WIDTH - enemy.rect.width)
             enemy.rect.y = random.randint(-enemy.rect.height, -10)
             self.enemies.append(enemy)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20

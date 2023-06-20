@@ -1,6 +1,10 @@
 import pygame
 import random
 from game.utils.constants import ENEMY_1, SCREEN_WIDTH, SCREEN_HEIGHT
+<<<<<<< HEAD
+=======
+from game.components.spaceship import Spaceship
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
 
 
 class Enemy(pygame.sprite.Sprite):
