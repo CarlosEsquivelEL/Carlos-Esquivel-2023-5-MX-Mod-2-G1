@@ -9,7 +9,7 @@ class PowerHandler:
         self.shields = []
         self.spawn_timer = 0
         self.spawn_interval = 5000
-        self.shield_duration = 10000  # Duración del escudo en milisegundos
+        self.shield_duration = 10000 
         self.shield_timer = 0
 
     def update(self, delta_time, spaceship, enemy_handler):
@@ -39,7 +39,7 @@ class PowerHandler:
             if not spaceship.shield_active:
                 spaceship.decrement_life()
                 if spaceship.life <= 0:
-                    spaceship.is_alive = False
+                    spaceship.restart_game()  # Reinicia el juego
 
         if spaceship.shield_active and pygame.time.get_ticks() - self.shield_timer >= self.shield_duration:
             spaceship.deactivate_shield()
@@ -48,7 +48,7 @@ class PowerHandler:
         power_type = random.choice([Life, Shield])
         power = power_type()
         power.rect.x = random.randint(0, SCREEN_WIDTH - power.rect.width)
-        power.rect.y = -power.rect.height  # Spawn item above the screen
+        power.rect.y = -power.rect.height  
         if isinstance(power, Life):
             self.lifes.append(power)
         elif isinstance(power, Shield):

@@ -36,7 +36,6 @@ class EnemyHandler:
             self.generate_red_enemies(8)
             self.generate_blue_enemies(8)
         else:
-            # Reset wave count and generate a new wave
             self.wave_count = 0
             self.regenerate_enemies()
 
@@ -67,3 +66,8 @@ class EnemyHandler:
             if random.randint(1, 50) == 1:
                 bullet = enemy.shoot()
                 self.bullets.append(bullet)
+
+    def reset(self):
+        self.enemies = []
+        self.bullets = []
+        self.wave_count = 0

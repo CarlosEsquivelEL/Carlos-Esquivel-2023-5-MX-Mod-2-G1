@@ -20,6 +20,7 @@ class MainMenu:
     def draw_menu(self):
         self.window.blit(self.background_image, (0, 0))
         self.draw_text("Press any key", self.font, WHITE, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
+
     def main_loop(self):
         running = True
 
@@ -31,7 +32,8 @@ class MainMenu:
 
                 if event.type == pygame.KEYDOWN:
                     running = False
-                    self.game.run()
 
             self.draw_menu()
             pygame.display.update()
+
+        self.game.start_game() 

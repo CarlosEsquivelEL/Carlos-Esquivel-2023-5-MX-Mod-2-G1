@@ -38,3 +38,8 @@ FONT_STYLE = 'freesansbold.ttf'
 FONT_SIZE = 30
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
+# Game Over Menu Constants
+TITLE_FONT_SIZE = 48
+MENU_FONT_SIZE = 32
+GREEN = (0, 255, 0)

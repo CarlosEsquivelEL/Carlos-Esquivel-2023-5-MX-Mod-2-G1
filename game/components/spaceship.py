@@ -14,6 +14,7 @@ class Spaceship(Sprite):
         self.image = pygame.transform.scale(self.image, (self.image_width, self.image_height))
         self.rect = self.image.get_rect()
         self.screen = pygame.display.set_mode((1100, 600))
+        self.reset_position()
         self.rect.x = 300
         self.rect.y = 500
         self.speed_x = 5
@@ -24,6 +25,10 @@ class Spaceship(Sprite):
         self.shield_active = False
         self.shield_image = pygame.transform.scale(SPACESHIP_SHIELD, (SPACESHIP_SHIELD_WIDTH, SPACESHIP_SHIELD_HEIGHT))
 
+    def reset_position(self):
+        self.rect.x = 300
+        self.rect.y = 500
+        
     def activate_shield(self):
         self.shield_active = True
         self.image = pygame.transform.scale(self.shield_image, (self.image_width, self.image_height))
@@ -31,6 +36,14 @@ class Spaceship(Sprite):
     def deactivate_shield(self):
         self.shield_active = False
         self.image = pygame.transform.scale(SPACESHIP, (self.image_width, self.image_height))
+
+    def decrement_life(self):
+        self.life -= 1
+
+    def restart_game(self):
+        self.life = 3
+        self.is_alive = True
+        self.shield_active = False
 
     def update(self, events):
         if events[pygame.K_LEFT] and events[pygame.K_UP]:
@@ -79,3 +92,11 @@ class Spaceship(Sprite):
             if spaceship_rect.colliderect(enemy_rect):
                 return True
         return False
+    
+    def reset(self):
+        self.is_alive = True
+        self.reset_position()
+        self.bullets = []
+        self.deactivate_shield()
+
+
