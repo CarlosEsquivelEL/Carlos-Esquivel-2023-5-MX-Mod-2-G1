@@ -1,20 +1,22 @@
 import pygame
 import random
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import ENEMY_1, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.components.spaceship import Spaceship
 
-class Power(pygame.sprite.Sprite):
 
-    def __init__(self, image):
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self):
         super().__init__()
-        self.image_width = 40
-        self.image_height = 40
-        self.image = image
+        self.image_width = 60
+        self.image_height = 60
+        self.image = ENEMY_1
         self.image = pygame.transform.scale(self.image, (self.image_width, self.image_height))
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(SCREEN_WIDTH - self.rect.width)
         self.rect.y = random.randrange(-100, -40)
         self.speedy = random.randrange(1, 10)
         self.speedx = random.randrange(-5, 5)
+    
 
     def update(self):
         self.rect.y += self.speedy
@@ -24,6 +26,6 @@ class Power(pygame.sprite.Sprite):
            self.rect.y = random.randrange(-100, -40)
            self.speedy = random.randrange(1, 10)
            self.speedx = random.randrange(-5, 5)
-
+   
     def draw(self, screen):
         screen.blit(self.image, self.rect)

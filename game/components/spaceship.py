@@ -1,14 +1,10 @@
 import pygame
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SPACESHIP_SHIELD
-from game.utils.constants import SPACESHIP_SHIELD_WIDTH, SPACESHIP_SHIELD_HEIGHT
-from game.components.bullets.bullet import Bullet_
+from game.utils.constants import SPACESHIP
 
 class Spaceship(Sprite):
     def __init__(self):
-        super().__init__()
-        self.is_alive = True
-        self.image_width = 40
+        self.image_widht = 40
         self.image_height = 60
         self.image = SPACESHIP
         self.image = pygame.transform.scale(self.image, (self.image_width, self.image_height))
@@ -19,56 +15,32 @@ class Spaceship(Sprite):
         self.rect.y = 500
         self.speed_x = 5
         self.speed_y = 5
-        self.bullets = []
-        self.bullet_speed = 10
-        self.life = 3
-        self.shield_active = False
-        self.shield_image = pygame.transform.scale(SPACESHIP_SHIELD, (SPACESHIP_SHIELD_WIDTH, SPACESHIP_SHIELD_HEIGHT))
-
-    def reset_position(self):
-        self.rect.x = 300
-        self.rect.y = 500
-        
-    def activate_shield(self):
-        self.shield_active = True
-        self.image = pygame.transform.scale(self.shield_image, (self.image_width, self.image_height))
-
-    def deactivate_shield(self):
-        self.shield_active = False
-        self.image = pygame.transform.scale(SPACESHIP, (self.image_width, self.image_height))
-
-    def decrement_life(self):
-        self.life -= 1
-
-    def restart_game(self):
-        self.life = 3
-        self.is_alive = True
-        self.shield_active = False
 
     def update(self, events):
-        if events[pygame.K_LEFT] and events[pygame.K_UP]:
-            self.rect.x -= self.speed_x
-            self.rect.y -= self.speed_y
-        elif events[pygame.K_LEFT] and events[pygame.K_DOWN]:
-            self.rect.x -= self.speed_x
-            self.rect.y += self.speed_y
-        elif events[pygame.K_RIGHT] and events[pygame.K_UP]:
-            self.rect.x += self.speed_x
-            self.rect.y -= self.speed_y
-        elif events[pygame.K_RIGHT] and events[pygame.K_DOWN]:
-            self.rect.x += self.speed_x
-            self.rect.y += self.speed_y
-        elif events[pygame.K_LEFT]:
-            self.rect.x -= self.speed_x
-        elif events[pygame.K_RIGHT]:
-            self.rect.x += self.speed_x
-        elif events[pygame.K_UP]:
-            self.rect.y -= self.speed_y
-        elif events[pygame.K_DOWN]:
-            self.rect.y += self.speed_y
-        elif events[pygame.K_SPACE]:
-            self.shoot_bullets()
 
+      if events[pygame.K_LEFT] and events[pygame.K_UP]:
+         self.rect.x -= self.speed_x
+         self.rect.y -= self.speed_y
+      elif events[pygame.K_LEFT] and events[pygame.K_DOWN]:
+         self.rect.x -= self.speed_x
+         self.rect.y += self.speed_y
+      elif events[pygame.K_RIGHT] and events[pygame.K_UP]:
+         self.rect.x += self.speed_x
+         self.rect.y -= self.speed_y
+      elif events[pygame.K_RIGHT] and events[pygame.K_DOWN]:
+         self.rect.x += self.speed_x
+         self.rect.y += self.speed_y
+      elif events[pygame.K_LEFT]:
+         self.rect.x -= self.speed_x
+      elif events[pygame.K_RIGHT]:
+         self.rect.x += self.speed_x
+      elif events[pygame.K_UP]:
+         self.rect.y -= self.speed_y
+      elif events[pygame.K_DOWN]:
+         self.rect.y += self.speed_y
+
+=======
+>>>>>>> 7f91d89b194a4e5547e10d7d4c9b61f4c85f0d20
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.rect.clamp_ip(self.screen.get_rect())

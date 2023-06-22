@@ -2,13 +2,8 @@ import pygame
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from game.utils.constants import BLACK
 from game.components.spaceship import Spaceship
-from game.components.enemigos.enemy_handler import EnemyHandler
-from game.components.collision import CollisionHandler
-from game.components.score import Score
-from game.components.powers.power_handler import PowerHandler
-from game.components.menus.game_over import GameOverMenu
-from game.components.menus.menu_main import MainMenu
-from game.components.menus.menu_pause import PauseMenu
+from game.components.enemy import Enemy
+
 
 class Game:
     def __init__(self):
@@ -18,19 +13,11 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
-        self.paused = False
-        self.game_speed = 10
+        self.game_speed = 10 # el numero de pixeles que el "objeto / imagen" se mueve en patalla
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.spaceship = Spaceship()
-        self.enemy_handler = EnemyHandler()
-        self.collision_handler = CollisionHandler()
-        self.score = Score()
-        self.power_handler = PowerHandler()
-        self.game_over_menu = None
-        self.game_over = False 
-        self.main_menu = MainMenu(self)
-        self.pause_menu = PauseMenu(self)
+        self.enemies = []
 
     def run(self):
         self.main_menu.main_loop()
@@ -43,8 +30,8 @@ class Game:
             if not self.game_over and not self.paused:
                 self.update(delta_time)
             self.draw()
-            pygame.display.update()
-
+        else:
+            print("Something ocurred to quit the game!")
         pygame.display.quit()
         pygame.quit()
 
@@ -52,19 +39,6 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
-            elif self.game_over and self.game_over_menu is not None:
-                menu_action = self.game_over_menu.handle_event(event)
-                if menu_action == "reset":
-                    self.reset_game()
-                elif menu_action == "exit":
-                    self.playing = False
-
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    if not self.paused:
-                        self.pause_game()
-                    else:
-                        self.resume_game()
 
     def reset_game(self):
         self.spaceship.reset()
@@ -76,17 +50,16 @@ class Game:
     def update(self, delta_time):
         events = pygame.key.get_pressed()
         self.spaceship.update(events)
-        self.enemy_handler.update()
-        self.enemy_handler.shoot_bullets()
-        self.spaceship.update_bullets()
-        self.power_handler.update(delta_time, self.spaceship, self.enemy_handler)
-        self.collision_handler.handle_collisions(self)
-        if not self.spaceship.is_alive:
-            self.game_over = True 
-        self.update_background()
+        
+        for enemy in self.enemies:
+            enemy.update()
+
+        if len(self.enemies) == 0:
+            self.regenerate_enemies()
 
     def draw(self):
-        self.screen.fill(BLACK)
+        self.clock.tick(FPS) # configuro cuantos frames per second voy a dibujar
+        self.screen.fill((255, 255, 255)) # lleno el screen de color BLANCO???? 255, 255, 255 es el codigo RGB
         self.draw_background()
         self.spaceship.draw(self.screen)
         self.enemy_handler.draw(self.screen)
@@ -98,8 +71,8 @@ class Game:
                 self.game_over_menu = GameOverMenu(self.score.value, self.score.max_score, self.score.enemies_eliminated)
             self.game_over_menu.draw(self.screen)
 
-        if self.paused:
-            self.pause_menu.draw_menu()
+        pygame.display.update() # esto hace que el dibujo se actualice en el display de pygame
+        pygame.display.flip()  # hace el cambio
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -111,14 +84,12 @@ class Game:
         self.y_pos_bg += self.game_speed
         if self.y_pos_bg >= SCREEN_HEIGHT:
             self.y_pos_bg = 0
+        self.y_pos_bg += self.game_speed
 
-    def pause_game(self):
-        self.paused = True
-        pause_menu = PauseMenu(self)
-        pause_menu.main_loop()
+    def regenerate_enemies(self):
+        for _ in range(10):
+            enemy = Enemy()
+            enemy.rect.x = random.randint(0, SCREEN_WIDTH - enemy.rect.width)
+            enemy.rect.y = random.randint(-enemy.rect.height, -10)
+            self.enemies.append(enemy)
 
-    def resume_game(self):
-        self.paused = False
-
-    
-    
